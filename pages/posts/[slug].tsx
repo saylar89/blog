@@ -1,7 +1,9 @@
 import PostContent from "components/posts/post-detail/post-content";
 import { getPostData, getPostsFiles } from "lib/posts.util";
-import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
+import Head from "next/head";
+import { Fragment } from "react";
 
 type Props = {
   post: {
@@ -19,7 +21,15 @@ interface IParams extends ParsedUrlQuery {
 }
 
 const PostDetailPage = (props: Props) => {
-  return <PostContent post={props.post} />;
+  return (
+    <Fragment>
+      <Head>
+        <title>{props.post.title}</title>
+        <meta name="description" content={props.post.excerpt} />
+      </Head>
+      <PostContent post={props.post} />
+    </Fragment>
+  );
 };
 
 export const getStaticProps: GetStaticProps = (context) => {
